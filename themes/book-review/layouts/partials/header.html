@@ -1,0 +1,22 @@
+<header class="site-header">
+    <div class="container">
+        <div class="header-content">
+            <a href="{{ .Site.BaseURL }}" class="site-logo">
+                {{ if .Site.Params.logo }}
+                <img src="{{ .Site.Params.logo }}" alt="{{ .Site.Title }}">
+                {{ else }}
+                <span class="logo-text">📚 {{ .Site.Title }}</span>
+                {{ end }}
+            </a>
+
+            <nav class="site-nav">
+                <ul>
+                    <li><a href="{{ .Site.BaseURL }}">首页</a></li>
+                    {{ range .Site.Menus.main }}
+                    <li><a href="{{ .URL }}">{{ .Name }}</a></li>
+                    {{ end }}
+                </ul>
+            </nav>
+        </div>
+    </div>
+</header>

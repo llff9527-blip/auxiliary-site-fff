@@ -1,0 +1,57 @@
+{{ define "main" }}
+<div class="home">
+    <!-- 站点介绍 -->
+    <section class="site-intro">
+        <h1>{{ .Site.Title }}</h1>
+        {{ with .Site.Params.description }}
+        <p class="site-description">{{ . }}</p>
+        {{ end }}
+    </section>
+
+    <!-- 最新书评 -->
+    <section class="recent-reviews">
+        <h2>最新书评</h2>
+
+        <div class="reviews-grid">
+            {{ range first 12 (where .Site.RegularPages "Type" "reviews") }}
+            <article class="review-card">
+                <a href="{{ .Permalink }}" class="review-link">
+                    <!-- 书籍封面 -->
+                    {{ with .Params.book_image }}
+                    <img src="{{ . | absURL }}" alt="{{ $.Params.book_title | default $.Title }}" class="review-cover">
+                    {{ else }}
+                    <div class="review-cover-placeholder">
+                        <span>📚</span>
+                    </div>
+                    {{ end }}
+
+                    <!-- 书评信息 -->
+                    <div class="review-info">
+                        <h3 class="review-card-title">{{ .Params.book_title | default .Title }}</h3>
+
+                        {{ with .Params.author }}
+                        <p class="review-author">{{ . }}</p>
+                        {{ end }}
+
+                        {{ with .Params.rating }}
+                        <div class="review-card-rating">
+                            <span class="rating-stars">
+                                {{ range seq (int .) }}★{{ end }}{{ range seq (sub 5 (int $.Params.rating)) }}☆{{ end }}
+                            </span>
+                            <span class="rating-value">({{ . }}/5)</span>
+                        </div>
+                        {{ end }}
+
+                        <p class="review-summary">{{ .Summary | plainify | truncate 120 }}</p>
+
+                        <time class="review-date" datetime="{{ .Date.Format "2006-01-02" }}">
+                            {{ .Date.Format "2006年01月02日" }}
+                        </time>
+                    </div>
+                </a>
+            </article>
+            {{ end }}
+        </div>
+    </section>
+</div>
+{{ end }}

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="{{ .Site.Language.Lang }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ block "title" . }}{{ .Title }} - {{ .Site.Title }}{{ end }}</title>
+    <meta name="description" content="{{ .Description | default .Summary | plainify }}">
+
+    <!-- SEO Meta Tags -->
+    <meta property="og:title" content="{{ .Title }}">
+    <meta property="og:description" content="{{ .Description | default .Summary | plainify }}">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="{{ .Permalink }}">
+    {{ with .Params.image }}<meta property="og:image" content="{{ . | absURL }}">{{ end }}
+
+    <!-- Schema.org JSON-LD for Review -->
+    {{ if eq .Type "reviews" }}
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Review",
+      "itemReviewed": {
+        "@type": "Book",
+        "name": "{{ .Params.book_title | default .Title }}",
+        {{ with .Params.author }}"author": {
+          "@type": "Person",
+          "name": "{{ . }}"
+        },{{ end }}
+        {{ with .Params.isbn }}"isbn": "{{ . }}",{{ end }}
+        {{ with .Params.book_image }}"image": "{{ . | absURL }}"{{ end }}
+      },
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "{{ .Params.rating | default 5 }}",
+        "bestRating": "5",
+        "worstRating": "1"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "{{ .Site.Params.author | default "站点作者" }}"
+      },
+      "datePublished": "{{ .Date.Format "2006-01-02" }}",
+      "reviewBody": {{ .Content | plainify | jsonify }}
+    }
+    </script>
+
+    <!-- Article Schema for SEO -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "{{ .Title }}",
+      "datePublished": "{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}",
+      "dateModified": "{{ .Lastmod.Format "2006-01-02T15:04:05Z07:00" }}",
+      "author": {
+        "@type": "Person",
+        "name": "{{ .Site.Params.author | default "站点作者" }}"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "{{ .Site.Title }}",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "{{ .Site.Params.logo | default "/logo.png" | absURL }}"
+        }
+      },
+      "description": "{{ .Description | default .Summary | plainify }}",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "{{ .Permalink }}"
+      }
+    }
+    </script>
+    {{ end }}
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="{{ "css/style.css" | relURL }}">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="{{ .Permalink }}">
+</head>
+<body>
+    {{ partial "header.html" . }}
+
+    <main>
+        {{ block "main" . }}{{ end }}
+    </main>
+
+    {{ partial "footer.html" . }}
+</body>
+</html>

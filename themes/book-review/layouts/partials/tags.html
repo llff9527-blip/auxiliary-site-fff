@@ -1,0 +1,8 @@
+{{ with .Params.tags }}
+<div class="tags">
+    <span class="tags-label">标签:</span>
+    {{ range . }}
+    <a href="{{ "/tags/" | relURL }}{{ . | urlize }}" class="tag">{{ . }}</a>
+    {{ end }}
+</div>
+{{ end }}

@@ -1,0 +1,17 @@
+<footer class="site-footer">
+    <div class="container">
+        <div class="footer-content">
+            <p>&copy; {{ now.Year }} {{ .Site.Title }}. All rights reserved.</p>
+
+            {{ with .Site.Params.main_site_url }}
+            <p class="main-site-link">
+                <a href="{{ . }}" target="_blank" rel="noopener">访问主站</a>
+            </p>
+            {{ end }}
+
+            {{ with .Site.Params.description }}
+            <p class="footer-description">{{ . }}</p>
+            {{ end }}
+        </div>
+    </div>
+</footer>

@@ -1,0 +1,518 @@
+/* ==================== Book-Review 主题 - 文艺书评风格 ==================== */
+/* 灵感来源: Goodreads, 豆瓣读书, Literary Hub */
+
+:root {
+    /* 书评主题配色 - 温暖文艺色调 */
+    --book-primary: #8B4513;        /* 棕褐色 */
+    --book-secondary: #2F4F2F;      /* 深绿 */
+    --book-accent: #CD853F;         /* 淡棕色 */
+    --book-text: #3e2723;           /* 深棕文字 */
+    --book-text-light: #6d4c41;     /* 中棕 */
+    --book-bg: #FFF8DC;             /* 米白背景 */
+    --book-bg-card: #FFFEF0;        /* 卡片米黄 */
+    --book-border: #D7CCC8;         /* 浅棕边框 */
+    --book-gold: #FFD700;           /* 金色星星 */
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Palatino Linotype", "Book Antiqua", Palatino, Georgia, serif;
+    line-height: 1.8;
+    color: var(--book-text);
+    background-color: var(--book-bg);
+    background-image:
+        linear-gradient(90deg, rgba(139,69,19,0.02) 1px, transparent 1px),
+        linear-gradient(rgba(139,69,19,0.02) 1px, transparent 1px);
+    background-size: 20px 20px;
+}
+
+/* ==================== Header - 优雅书架风格 ==================== */
+.site-header {
+    background: linear-gradient(to bottom, var(--book-bg-card), var(--book-bg));
+    border-bottom: 3px double var(--book-border);
+    padding: 0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 4px 12px rgba(139,69,19,0.08);
+}
+
+.header-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1.5rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.site-logo {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--book-primary);
+    font-family: "Palatino Linotype", serif;
+    letter-spacing: 1px;
+    text-shadow: 2px 2px 4px rgba(139,69,19,0.1);
+}
+
+.site-logo::before {
+    content: "📚 ";
+}
+
+.site-nav ul {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+}
+
+.site-nav a {
+    color: var(--book-text-light);
+    font-weight: 600;
+    font-size: 1rem;
+    text-decoration: none;
+    transition: color 0.3s ease;
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.site-nav a:hover {
+    color: var(--book-primary);
+}
+
+/* ==================== Hero - 温馨介绍区 ==================== */
+.site-intro {
+    background: linear-gradient(135deg, var(--book-primary) 0%, var(--book-secondary) 100%);
+    padding: 5rem 2rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.site-intro::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y="50" font-size="40" opacity="0.05">📖</text></svg>');
+    opacity: 0.1;
+}
+
+.site-intro h1 {
+    font-size: 3rem;
+    color: var(--book-bg);
+    margin-bottom: 1rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    position: relative;
+    z-index: 1;
+}
+
+.site-description {
+    font-size: 1.3rem;
+    color: rgba(255,255,255,0.9);
+    max-width: 600px;
+    margin: 0 auto;
+    font-style: italic;
+    position: relative;
+    z-index: 1;
+}
+
+/* ==================== 书评卡片网格 ==================== */
+.recent-reviews {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 4rem 2rem;
+}
+
+.recent-reviews h2 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 3rem;
+    color: var(--book-primary);
+    text-align: center;
+    position: relative;
+    padding-bottom: 1rem;
+}
+
+.recent-reviews h2::after {
+    content: '📚';
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+    font-size: 1.5rem;
+}
+
+.reviews-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 2.5rem;
+}
+
+/* 书评卡片 - 立体书籍效果 */
+.review-card {
+    background-color: var(--book-bg-card);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow:
+        0 4px 6px rgba(139,69,19,0.1),
+        0 8px 20px rgba(139,69,19,0.08);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    border: 2px solid var(--book-border);
+    position: relative;
+}
+
+.review-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 6px;
+    background: linear-gradient(90deg, var(--book-primary), var(--book-accent), var(--book-secondary));
+}
+
+.review-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow:
+        0 12px 24px rgba(139,69,19,0.15),
+        0 20px 40px rgba(139,69,19,0.12);
+}
+
+.review-link {
+    display: block;
+    color: inherit;
+    text-decoration: none;
+}
+
+/* 书籍封面 */
+.review-cover,
+.review-cover-placeholder {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.6s ease;
+}
+
+.review-card:hover .review-cover {
+    transform: scale(1.05);
+}
+
+.review-cover-placeholder {
+    background: linear-gradient(135deg, var(--book-primary) 0%, var(--book-accent) 50%, var(--book-secondary) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 6rem;
+    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
+}
+
+/* 书评信息 */
+.review-info {
+    padding: 2rem;
+}
+
+.review-card-title {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--book-text);
+    margin-bottom: 0.75rem;
+    line-height: 1.4;
+    font-family: "Palatino Linotype", serif;
+}
+
+.review-author {
+    color: var(--book-text-light);
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    font-style: italic;
+}
+
+.review-author::before {
+    content: "✍️ ";
+}
+
+/* 评分星星 */
+.review-card-rating {
+    margin-bottom: 1rem;
+}
+
+.rating-stars {
+    color: var(--book-gold);
+    font-size: 1.3rem;
+    letter-spacing: 2px;
+    filter: drop-shadow(0 2px 4px rgba(255,215,0,0.3));
+}
+
+.rating-value {
+    color: var(--book-text-light);
+    font-size: 0.95rem;
+    margin-left: 0.5rem;
+}
+
+.review-summary {
+    color: var(--book-text-light);
+    font-size: 1rem;
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.review-date {
+    color: var(--book-text-light);
+    font-size: 0.9rem;
+    display: block;
+    padding-top: 1rem;
+    border-top: 1px dashed var(--book-border);
+}
+
+/* ==================== 书评详情页 ==================== */
+main {
+    background: linear-gradient(to bottom, var(--book-bg), var(--book-bg-card));
+}
+
+.review-single {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 4rem 2rem;
+}
+
+.review-header {
+    margin-bottom: 3rem;
+    text-align: center;
+}
+
+.review-title {
+    font-size: 3rem;
+    color: var(--book-text);
+    margin-bottom: 2rem;
+    line-height: 1.3;
+    font-weight: 700;
+    font-family: "Palatino Linotype", serif;
+}
+
+/* 书籍信息卡片 */
+.book-info {
+    display: flex;
+    gap: 3rem;
+    background: linear-gradient(135deg, var(--book-bg-card), #FFFEF8);
+    padding: 2.5rem;
+    border-radius: 16px;
+    margin-bottom: 3rem;
+    box-shadow:
+        0 8px 16px rgba(139,69,19,0.1),
+        inset 0 1px 0 rgba(255,255,255,0.5);
+    border: 2px solid var(--book-border);
+}
+
+.book-cover {
+    width: 250px;
+    height: auto;
+    border-radius: 8px;
+    box-shadow:
+        0 12px 24px rgba(139,69,19,0.2),
+        0 0 0 1px rgba(139,69,19,0.1);
+    transition: transform 0.3s ease;
+}
+
+.book-cover:hover {
+    transform: scale(1.05);
+}
+
+.book-meta {
+    flex: 1;
+}
+
+.book-title {
+    font-size: 2rem;
+    color: var(--book-primary);
+    margin-bottom: 1.5rem;
+    font-weight: 700;
+    font-family: "Palatino Linotype", serif;
+}
+
+.book-meta p {
+    margin-bottom: 0.75rem;
+    color: var(--book-text);
+    font-size: 1.05rem;
+}
+
+.review-rating {
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 2px dashed var(--book-border);
+}
+
+.review-rating .rating-stars {
+    font-size: 2rem;
+    margin-left: 1rem;
+}
+
+/* 书评正文 */
+.review-content {
+    font-size: 1.15rem;
+    line-height: 1.9;
+    color: var(--book-text);
+    background-color: var(--book-bg-card);
+    padding: 3rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(139,69,19,0.08);
+}
+
+.review-content h2 {
+    font-size: 2rem;
+    color: var(--book-primary);
+    margin: 2.5rem 0 1.5rem;
+    font-family: "Palatino Linotype", serif;
+    border-bottom: 3px solid var(--book-accent);
+    padding-bottom: 0.5rem;
+}
+
+.review-content h3 {
+    font-size: 1.6rem;
+    color: var(--book-secondary);
+    margin: 2rem 0 1rem;
+}
+
+.review-content p {
+    margin-bottom: 1.75rem;
+    text-indent: 2em;
+}
+
+.review-content p:first-of-type::first-letter {
+    font-size: 3.5em;
+    font-weight: 700;
+    float: left;
+    line-height: 0.9;
+    margin: 0.1em 0.1em 0 0;
+    color: var(--book-primary);
+}
+
+.review-content blockquote {
+    border-left: 5px solid var(--book-accent);
+    padding-left: 2rem;
+    margin: 2.5rem 0;
+    font-size: 1.3rem;
+    font-style: italic;
+    color: var(--book-text-light);
+    background: rgba(139,69,19,0.03);
+    padding: 1.5rem 2rem;
+    border-radius: 0 8px 8px 0;
+}
+
+/* 内链 - 书签风格 */
+.internal-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    background: linear-gradient(135deg, var(--book-primary), var(--book-accent));
+    color: white;
+    padding: 1rem 2rem;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    margin: 2rem 0;
+    text-decoration: none;
+    box-shadow: 0 4px 12px rgba(139,69,19,0.3);
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.internal-link:hover {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 8px 20px rgba(139,69,19,0.4);
+}
+
+.internal-link::before {
+    content: "🔖";
+    font-size: 1.3rem;
+}
+
+/* 标签 */
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 2px dashed var(--book-border);
+}
+
+.tags-label {
+    color: var(--book-text-light);
+    font-weight: 700;
+}
+
+.tag {
+    background: linear-gradient(135deg, var(--book-bg-card), #FFF);
+    color: var(--book-text);
+    padding: 0.5rem 1.25rem;
+    border-radius: 20px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-decoration: none;
+    border: 2px solid var(--book-border);
+    transition: all 0.3s ease;
+}
+
+.tag:hover {
+    background: var(--book-primary);
+    color: white;
+    border-color: var(--book-primary);
+    transform: translateY(-2px);
+}
+
+/* ==================== Footer ==================== */
+.site-footer {
+    background: linear-gradient(to bottom, var(--book-primary), var(--book-secondary));
+    color: rgba(255,255,255,0.85);
+    padding: 3rem 0;
+    margin-top: 5rem;
+    text-align: center;
+    border-top: 4px solid var(--book-accent);
+}
+
+.site-footer a {
+    color: var(--book-accent);
+    text-decoration: none;
+    font-weight: 700;
+}
+
+/* ==================== 响应式 ==================== */
+@media (max-width: 768px) {
+    .site-intro h1 {
+        font-size: 2.25rem;
+    }
+
+    .reviews-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .review-title {
+        font-size: 2rem;
+    }
+
+    .book-info {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .book-cover {
+        width: 100%;
+        max-width: 300px;
+        margin: 0 auto;
+    }
+
+    .review-content {
+        padding: 2rem;
+    }
+}

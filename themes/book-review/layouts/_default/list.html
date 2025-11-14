@@ -1,0 +1,53 @@
+{{ define "main" }}
+<div class="reviews-list">
+    <header class="list-header">
+        <h1>{{ .Title }}</h1>
+        {{ with .Content }}
+        <div class="list-description">
+            {{ . }}
+        </div>
+        {{ end }}
+    </header>
+
+    <div class="reviews-grid">
+        {{ range .Pages }}
+        <article class="review-card">
+            <a href="{{ .Permalink }}" class="review-link">
+                <!-- 书籍封面 -->
+                {{ with .Params.book_image }}
+                <img src="{{ . | absURL }}" alt="{{ $.Params.book_title | default $.Title }}" class="review-cover">
+                {{ else }}
+                <div class="review-cover-placeholder">
+                    <span>📚</span>
+                </div>
+                {{ end }}
+
+                <!-- 书评信息 -->
+                <div class="review-info">
+                    <h2 class="review-card-title">{{ .Params.book_title | default .Title }}</h2>
+
+                    {{ with .Params.author }}
+                    <p class="review-author">{{ . }}</p>
+                    {{ end }}
+
+                    {{ with .Params.rating }}
+                    <div class="review-card-rating">
+                        <span class="rating-stars">
+                            {{ range seq (int .) }}★{{ end }}{{ range seq (sub 5 (int $.Params.rating)) }}☆{{ end }}
+                        </span>
+                        <span class="rating-value">({{ . }}/5)</span>
+                    </div>
+                    {{ end }}
+
+                    <p class="review-summary">{{ .Summary | plainify | truncate 150 }}</p>
+
+                    <time class="review-date" datetime="{{ .Date.Format "2006-01-02" }}">
+                        {{ .Date.Format "2006年01月02日" }}
+                    </time>
+                </div>
+            </a>
+        </article>
+        {{ end }}
+    </div>
+</div>
+{{ end }}

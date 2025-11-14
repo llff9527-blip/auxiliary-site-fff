@@ -1,0 +1,12 @@
+name = "Book Review"
+license = "MIT"
+licenselink = "https://github.com/yourusername/hugo-theme-book-review/blob/master/LICENSE"
+description = "书评主题 - 专注于书籍评论和推荐,优化 SEO 结构化数据"
+homepage = "https://github.com/yourusername/hugo-theme-book-review"
+tags = ["book", "review", "reading", "literature", "seo", "schema.org"]
+features = ["Schema.org Review markup", "Google Rich Results", "SEO optimized", "内链支持"]
+min_version = "0.110.0"
+
+[author]
+  name = "Your Name"
+  homepage = "https://example.com"

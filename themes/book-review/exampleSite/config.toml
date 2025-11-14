@@ -1,0 +1,22 @@
+baseURL = "https://example.com/"
+languageCode = "zh-CN"
+title = "我的书评站"
+themesDir = "../../"
+theme = "book-review"
+
+[params]
+  description = "分享阅读心得,推荐优质书籍"
+  author = "书评作者"
+  logo = ""
+  main_site_url = "https://main-site.example.com"
+
+# 菜单配置
+[[menu.main]]
+  name = "书评"
+  url = "/reviews/"
+  weight = 1
+
+# 分类法配置
+[taxonomies]
+  tag = "tags"
+  genre = "genres"

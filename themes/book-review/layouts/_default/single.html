@@ -1,0 +1,66 @@
+{{ define "main" }}
+<article class="review-single">
+    <!-- 书评头部 -->
+    <header class="review-header">
+        <h1 class="review-title">{{ .Title }}</h1>
+
+        <!-- 书籍信息卡片 -->
+        <div class="book-info">
+            {{ with .Params.book_image }}
+            <img src="{{ . | absURL }}" alt="{{ $.Params.book_title | default $.Title }}" class="book-cover">
+            {{ end }}
+
+            <div class="book-meta">
+                <h2 class="book-title">{{ .Params.book_title | default .Title }}</h2>
+
+                {{ with .Params.author }}
+                <p class="book-author"><strong>作者:</strong> {{ . }}</p>
+                {{ end }}
+
+                {{ with .Params.isbn }}
+                <p class="book-isbn"><strong>ISBN:</strong> {{ . }}</p>
+                {{ end }}
+
+                {{ with .Params.published_year }}
+                <p class="book-year"><strong>出版年份:</strong> {{ . }}</p>
+                {{ end }}
+
+                {{ with .Params.genre }}
+                <p class="book-genre"><strong>类型:</strong> {{ . }}</p>
+                {{ end }}
+
+                <!-- 评分显示 -->
+                {{ with .Params.rating }}
+                <div class="review-rating">
+                    <strong>评分:</strong>
+                    <span class="rating-stars">
+                        {{ range seq (int .) }}★{{ end }}{{ range seq (sub 5 (int $.Params.rating)) }}☆{{ end }}
+                    </span>
+                    <span class="rating-value">({{ . }}/5)</span>
+                </div>
+                {{ end }}
+            </div>
+        </div>
+
+        <!-- 文章元数据 -->
+        <div class="review-meta">
+            <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006年01月02日" }}</time>
+            {{ with .Params.read_time }}
+            <span class="read-time">{{ . }} 分钟阅读</span>
+            {{ end }}
+        </div>
+    </header>
+
+    <!-- 书评正文 -->
+    <div class="review-content">
+        {{ .Content }}
+    </div>
+
+    <!-- 标签 -->
+    {{ if .Params.tags }}
+    <footer class="review-footer">
+        {{ partial "tags.html" . }}
+    </footer>
+    {{ end }}
+</article>
+{{ end }}

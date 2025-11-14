@@ -1,0 +1,19 @@
+{{/*
+  内链 Shortcode - 书签风格
+
+  使用方法:
+  {{< internal-link novel-id="12345" text="点击阅读" >}}
+*/}}
+
+{{ $novelId := .Get "novel-id" }}
+{{ $text := .Get "text" | default "阅读原文" }}
+{{ $mainSiteUrl := .Site.Params.mainSiteUrl }}
+{{ $novelUrl := printf "%s/novel/%s" $mainSiteUrl $novelId }}
+
+<a href="{{ $novelUrl }}"
+   class="internal-link"
+   rel="noopener nofollow"
+   target="_blank"
+   title="在主站阅读">
+  <span class="link-text">{{ $text }}</span>
+</a>
